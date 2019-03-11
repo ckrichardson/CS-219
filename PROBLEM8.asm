@@ -9,28 +9,28 @@ section .text
 ; put your code here
 ;
 start:
-	XOR ax, ax
-	XOR bx, bx
-	XOR cx, cx
+	XOR ax, ax		; Initialize Ax to 0
+	XOR bx, bx		; Initialize Bx to 0
+	XOR cx, cx		; Initialize Cx to 0
 	
 CALC:
-	MOV al, [STRING + bx]
-	CMP al, 0
-	JE FINISH
-	CMP [KEY], al
-	JE INCREMENT
-	JMP PROCEED
+	MOV al, [STRING + bx]	; Move in char from string
+	CMP al, 0		; See if it is the null char
+	JE FINISH		; If so, exit (end of string)
+	CMP [KEY], al		; Compare with provided key
+	JE INCREMENT		; If equal to key
+	JMP PROCEED		; If not equal to key
 
 PROCEED: 
-	INC bx
-	JMP CALC
+	INC bx			; Increment the offset
+	JMP CALC		; Jump back to CALC
 	
 INCREMENT:
-	INC cx
-	INC bx
-	JMP CALC
+	INC cx			; Increment counter 
+	INC bx			; Increment the offset
+	JMP CALC		; Jump back to CALC
 FINISH:
-	MOV [0x154], cx
+	MOV [0x154], cx		; Copy result of counter into 0x154
 	
 	
 
